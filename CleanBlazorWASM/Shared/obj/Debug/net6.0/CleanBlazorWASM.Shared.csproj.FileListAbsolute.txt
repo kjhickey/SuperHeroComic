@@ -1,0 +1,12 @@
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\bin\Debug\net6.0\CleanBlazorWASM.Shared.deps.json
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\bin\Debug\net6.0\CleanBlazorWASM.Shared.dll
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\bin\Debug\net6.0\CleanBlazorWASM.Shared.pdb
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.csproj.AssemblyReference.cache
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.AssemblyInfoInputs.cache
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.AssemblyInfo.cs
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.csproj.CoreCompileInputs.cache
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.dll
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\refint\CleanBlazorWASM.Shared.dll
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\CleanBlazorWASM.Shared.pdb
+C:\Users\kjhic\source\repos\CleanBlazorWASM\CleanBlazorWASM\Shared\obj\Debug\net6.0\ref\CleanBlazorWASM.Shared.dll
