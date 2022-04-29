@@ -6,6 +6,12 @@
 
 <h3>SuperHeroes</h3>
 
+
+<div class="form-group">
+    <input class="form-control" type="text" placeholder="Filter..."
+           @bind="Filter"
+           @bind:event="oninput">
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -19,6 +25,8 @@
     <tbody>
         @foreach (var hero in SuperHeroService.Heroes)
         {
+            if (!IsVisible(hero))
+                continue;
             <tr>
                 <td>@hero.FirstName</td>
                 <td>@hero.LastName</td>
@@ -37,6 +45,28 @@
     protected override async Task OnInitializedAsync()
     {
         await SuperHeroService.GetSuperHeroes();
+    }
+
+    public string Filter { get; set; }
+
+    public bool IsVisible(Superhero hero)
+    {
+        if (string.IsNullOrEmpty(Filter))
+            return true;
+ 
+        if (hero.FirstName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (hero.LastName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (hero.HeroName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+ 
+       if (hero.Comic!.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+ 
+        return false;
     }
 
     void ShowHero(int id)
