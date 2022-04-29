@@ -1,0 +1,67 @@
+﻿@page "/superheroessearch"
+@inject ISuperHeroService SuperHeroService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Super Heroes</PageTitle>
+
+<h3>SuperHeroes</h3>
+
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="btn-search" 
+           @bind="Filter"
+           @bind:event="oninput">
+  <button class="btn btn-outline-secondary" type="button" id="btn-search" @onclick="@OnSubmitSearch">Search</button>
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Hero Name</th>
+            <th>Comic</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hero in SuperHeroService.Heroes)
+        {
+            <tr>
+                <td>@hero.FirstName</td>
+                <td>@hero.LastName</td>
+                <td>@hero.HeroName</td>
+                <td>@hero.Comic.Name</td>
+                <td>
+                    <button class="btn btn=primary" @onclick="(() => ShowHero(hero.Id))"><i class="oi oi-pencil"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary" @onclick="CreateNewHero">Create New Hero</button>
+
+@code {
+
+    public string Filter { get; set; }
+
+    protected async Task OnSubmitSearch(MouseEventArgs mouseEventArgs)
+    {
+        await SuperHeroService.Search(Filter);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SuperHeroService.GetSuperHeroes();
+    }
+
+    void ShowHero(int id)
+    {
+        NavigationManager.NavigateTo($"hero/{id}");
+    }
+
+    void CreateNewHero()
+    {
+        NavigationManager.NavigateTo("/hero");
+    }
+}

@@ -70,5 +70,12 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
 			var result = await _http.PutAsJsonAsync($"api/superhero/{hero.Id}", hero);
 			await SetHeroes(result);
 		}
-    }
+
+		public async Task Search(string searchText)
+		{
+			var result = await _http.GetFromJsonAsync<List<Superhero>>($"api/superhero/search/{searchText}");
+			if (result != null)
+				Heroes = result;
+		}
+	}
 }

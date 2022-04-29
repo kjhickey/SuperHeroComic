@@ -96,5 +96,18 @@ namespace CleanBlazorWASM.Server.Controllers
 			return await _context.Superheros.Include(sh => sh.Comic).ToListAsync();
         }
 
+		[HttpGet("search/{searchText}")]
+		public async Task<ActionResult<List<Superhero>>> Search(string searchText)
+        {
+			var heroes = await _context.Superheros.Include(sh => sh.Comic)
+				.Where(sh => sh.FirstName.Contains(searchText) 
+				|| sh.LastName.Contains(searchText)
+				|| sh.HeroName.Contains(searchText)
+				|| sh.Comic.Name.Contains(searchText)
+				)
+				.ToListAsync();
+			return Ok(heroes);
+		}
+
 	}
 }

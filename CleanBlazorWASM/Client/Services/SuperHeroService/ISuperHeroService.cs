@@ -16,5 +16,6 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
 		Task CreateHero(Superhero hero);
 		Task UpdateHero(Superhero hero);
 		Task DeleteHero(int id);
+        Task Search(string searchText);
     }
 }
