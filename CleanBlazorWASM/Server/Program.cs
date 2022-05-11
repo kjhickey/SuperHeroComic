@@ -2,12 +2,17 @@ global using CleanBlazorWASM.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using CleanBlazorWASM.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
+using CleanBlazorWASM.Server.Attributes;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHttpClient(nameof(HttpClient))
+    .AddHttpMessageHandler<MessageHandler>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -27,6 +32,12 @@ else
     app.UseHsts();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor API V1");
+});
+
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
@@ -35,8 +46,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
+app.MapFallbackToFile("index.html");
+
 app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+
 
 app.Run();

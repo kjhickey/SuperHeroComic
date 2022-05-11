@@ -17,14 +17,7 @@ namespace CleanBlazorWASM.Server.Controllers
         public SuperHeroController(DataContext context)
         {
 			_context = context;
-        }
-
-	   [HttpGet("comics")]
-	   public async Task<ActionResult<List<Comic>>> GetComics()
-	   {
-			var comics = await _context.Comics.ToListAsync();
-			return Ok(comics);
-	   }
+        }	  
 
 		[HttpGet]
 		public async Task<ActionResult<List<Superhero>>> GetSuperHeroes()
@@ -34,7 +27,7 @@ namespace CleanBlazorWASM.Server.Controllers
 		}
 
 		[HttpGet("{id}")]
-	   public async Task<ActionResult<List<Superhero>>> GetSingleHero(int id)
+	   public async Task<ActionResult<Superhero>> GetSingleHero(int id)
 	   {
 		  var hero = await _context.Superheros
 				.Include(h => h.Comic)
@@ -77,7 +70,7 @@ namespace CleanBlazorWASM.Server.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<List<Superhero>>> DeleteSuperHero(Superhero hero, int id)
+		public async Task<ActionResult<List<Superhero>>> DeleteSuperHero(int id)
 		{
 			var dbHero = await _context.Superheros
 				.Include(sh => sh.Comic)
@@ -106,6 +99,14 @@ namespace CleanBlazorWASM.Server.Controllers
 				|| sh.Comic.Name.Contains(searchText)
 				)
 				.ToListAsync();
+			return Ok(heroes);
+		}
+
+		[HttpGet]
+		[Route("~/api/comics/{id}/superheroes")]
+		public async Task<ActionResult<List<Superhero>>> GetSuperHeroesByComicId(int id)
+		{
+			var heroes = await _context.Superheros.Where(sh => sh.ComicId == id).ToListAsync();
 			return Ok(heroes);
 		}
 
