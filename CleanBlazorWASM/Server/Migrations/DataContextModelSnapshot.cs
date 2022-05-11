@@ -101,12 +101,17 @@ namespace CleanBlazorWASM.Server.Migrations
             modelBuilder.Entity("CleanBlazorWASM.Shared.Superhero", b =>
                 {
                     b.HasOne("CleanBlazorWASM.Shared.Comic", "Comic")
-                        .WithMany()
+                        .WithMany("Heroes")
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Comic");
+                });
+
+            modelBuilder.Entity("CleanBlazorWASM.Shared.Comic", b =>
+                {
+                    b.Navigation("Heroes");
                 });
 #pragma warning restore 612, 618
         }

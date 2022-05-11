@@ -1,0 +1,57 @@
+﻿@page "/Comics"
+@inject ISuperHeroService SuperHeroService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Comics</PageTitle>
+
+<h3>Comics</h3>
+
+<button class="btn btn-primary" @onclick="CreateNewComic">Create New Comic</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Comic</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comic in SuperHeroService.Comics)
+        {       
+        
+            <tr>
+                <td><button type="button" class="btn btn-link" @onclick="(() =>ShowComicBrand(comic.Id))">@comic.Name</button></td>
+                <td>
+                
+                <button type="button" class="btn btn-primary" @onclick="(() =>ShowComic(comic.Id))">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await SuperHeroService.GetComics();
+    }       
+
+    void ShowComic(int id)
+    {
+        NavigationManager.NavigateTo($"comic/{id}");
+    }
+
+    void CreateNewComic()
+    {
+        NavigationManager.NavigateTo("/comic");
+    }
+
+    //navigate to list of heroes with specific comic Id
+
+    void ShowComicBrand(int id)
+    {
+        NavigationManager.NavigateTo($"/comicbrand/{id}");
+    }
+
+}

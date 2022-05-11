@@ -1,24 +1,17 @@
-﻿@page "/superheroes"
+﻿@page "/comicbrand/{id:int}"
 @inject ISuperHeroService SuperHeroService
 @inject NavigationManager NavigationManager
 
-<PageTitle>Super Heroes</PageTitle>
+<PageTitle>@comic?.Name</PageTitle>
 
-<h3>SuperHeroes</h3>
+<h3>@comic?.Name</h3>
 
-
-<div class="form-group">
-    <input class="form-control" type="text" placeholder="Filter..."
-           @bind="Filter"
-           @bind:event="oninput">
-</div>
 <table class="table">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Hero Name</th>
-            <th>Comic</th>
             <th></th>
         </tr>
     </thead>
@@ -31,7 +24,6 @@
                 <td>@hero.FirstName</td>
                 <td>@hero.LastName</td>
                 <td>@hero.HeroName</td>
-                <td>@hero.Comic?.Name</td>
                 <td>
                     <button class="btn btn=primary" @onclick="(() => ShowHero(hero.Id))"><i class="oi oi-pencil"></i></button>
                 </td>
@@ -42,9 +34,23 @@
 <button class="btn btn-primary" @onclick="CreateNewHero">Create New Hero</button>
 
 @code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    CleanBlazorWASM.Shared.Comic comic = null;
+
     protected override async Task OnInitializedAsync()
     {
-        await SuperHeroService.GetSuperHeroes();
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        
+        comic = await SuperHeroService.GetSingleComic((int)Id);
+        await SuperHeroService.GetSuperHeroesByComic(Id);
+        
     }
 
     public string Filter { get; set; }

@@ -19,5 +19,6 @@ namespace CleanBlazorWASM.Shared
 	   public Comic? Comic { get; set; }
 
 	   public int ComicId { get; set; }
+
     }
 }

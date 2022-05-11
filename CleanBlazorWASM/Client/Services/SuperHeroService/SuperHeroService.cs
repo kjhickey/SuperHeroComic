@@ -26,7 +26,6 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
         public async Task CreateHero(Superhero hero)
         {
 			var result = await _http.PostAsJsonAsync("api/superhero", hero);
-			var response = await result.Content.ReadFromJsonAsync<List<Superhero>>();
 			await SetHeroes(result);
 		}
 
@@ -43,9 +42,16 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
 			_navigationManager.NavigateTo("superheroes");
         }
 
-        public async Task GetComics()
+		private async Task SetComics(HttpResponseMessage result)
+		{
+			var response = await result.Content.ReadFromJsonAsync<List<Comic>>();
+			Comics = response;
+			_navigationManager.NavigateTo("comics");
+		}
+
+		public async Task GetComics()
 	   {
-			var result = await _http.GetFromJsonAsync<List<Comic>>("api/superhero/comics");
+			var result = await _http.GetFromJsonAsync<List<Comic>>("api/comics");
 			if (result != null)
 				Comics = result;
 		}
@@ -56,9 +62,17 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
 			if (result != null)
 				return result;
 			throw new Exception("Hero not found!");
+	   }
+
+		public async Task<Comic> GetSingleComic(int id)
+		{
+			var result = await _http.GetFromJsonAsync<Comic>($"api/comics/{id}");
+			if (result != null)
+				return result;
+			throw new Exception("Comic not found!");
 		}
 
-	   public async Task GetSuperHeroes()
+		public async Task GetSuperHeroes()
 	   {
 		  var result = await _http.GetFromJsonAsync<List<Superhero>>("api/superhero");
 		  if (result != null)
@@ -77,5 +91,30 @@ namespace CleanBlazorWASM.Client.Services.SuperHeroService
 			if (result != null)
 				Heroes = result;
 		}
-	}
+
+        public async Task CreateComic(Comic comic)
+        {
+			var result = await _http.PostAsJsonAsync("api/comics", comic);
+			await SetComics(result);
+		}
+
+        public async Task UpdateComic(Comic comic)
+        {
+			var result = await _http.PutAsJsonAsync($"api/comics/{comic.Id}", comic);
+			await SetComics(result);
+		}
+
+        public async Task DeleteComic(int id)
+        {
+			var result = await _http.DeleteAsync($"api/comics/{id}");
+			await SetComics(result);
+		}
+
+        public async Task GetSuperHeroesByComic(int comicId)
+        {
+			var result = await _http.GetFromJsonAsync<List<Superhero>>($"api/comics/{comicId}/superheroes");
+			if (result != null)
+				Heroes = result;
+		}
+    }
 }
