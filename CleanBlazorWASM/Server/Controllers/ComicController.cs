@@ -59,7 +59,7 @@ namespace CleanBlazorWASM.Server.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<List<Comic>>> DeleteComic(Comic comic, int id)
+		public async Task<ActionResult<List<Comic>>> DeleteComic(int id)
 		{
 			var dbComic = await _context.Comics
 				.FirstOrDefaultAsync(sh => sh.Id == id);

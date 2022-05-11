@@ -1,6 +1,8 @@
 ﻿@page "/hero"
 @page "/hero/{id:int}"
+@using CleanBlazorWASM.Client.Services.MovieApiService
 @inject ISuperHeroService SuperHeroService
+@inject IMovieApiService MovieApiService
 
 @if (Id == null)
 {
@@ -41,11 +43,34 @@ else
 
 </EditForm>
 
+@if (movieApiResponse != null)
+{
+    <h4>Movies</h4>
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in movieApiResponse.Results.OrderByDescending(x => x.ReleaseDate))
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.ReleaseDate</td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
+
 @code {
     [Parameter]
     public int? Id { get; set; }
 
     string btnText = string.Empty;
+    MovieApiResponse movieApiResponse;
 
     Superhero hero = new Superhero { Comic = new CleanBlazorWASM.Shared.Comic() };
 
@@ -65,6 +90,7 @@ else
         else
         {
             hero = await SuperHeroService.GetSingleHero((int)Id);
+            movieApiResponse = await MovieApiService.MovieSearch(hero.HeroName);
         }
     }
 
